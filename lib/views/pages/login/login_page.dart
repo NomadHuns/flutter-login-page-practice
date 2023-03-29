@@ -9,11 +9,15 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          LoginLogo(),
-          LoginForm(),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            SizedBox(height: 200),
+            LoginLogo(),
+            LoginForm(),
+          ],
+        ),
       ),
     );
   }
