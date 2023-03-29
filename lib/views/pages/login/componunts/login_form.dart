@@ -11,14 +11,16 @@ class LoginForm extends StatelessWidget {
         SizedBox(height: 10),
         _loginInput("Password"),
         SizedBox(height: 20,),
-        _loginButton(),
+        _loginButton(context),
       ],
     );
   }
 
-  TextButton _loginButton() {
+  TextButton _loginButton(context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, "/home");
+      },
       child: Text(
         "Login",
         style: TextStyle(color: Colors.white),
