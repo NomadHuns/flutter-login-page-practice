@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+
+  LoginForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _loginInput("Email"),
-        SizedBox(height: 10),
-        _loginInput("Password"),
-        SizedBox(height: 20,),
-        _loginButton(context),
-      ],
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          _loginInput("Email", false),
+          SizedBox(height: 10),
+          _loginInput("Password", true),
+          SizedBox(
+            height: 20,
+          ),
+          _loginButton(context),
+        ],
+      ),
     );
   }
 
-  TextButton _loginButton(context) {
+  Widget _loginButton(context) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, "/home");
+        if (_formKey.currentState!.validate()) {
+          Navigator.pushNamed(context, "/home");
+        }
       },
       child: Text(
         "Login",
@@ -28,14 +37,19 @@ class LoginForm extends StatelessWidget {
     );
   }
 
-  Widget _loginInput(String text) {
+  Widget _loginInput(String text, bool obscure) {
     return Column(
       children: [
         Align(
           alignment: AlignmentDirectional.bottomStart,
           child: Text(text),
         ),
+        SizedBox(
+          height: 10,
+        ),
         TextFormField(
+          validator: (value) => value!.isEmpty ? "Please enter $text" : null,
+          obscureText: obscure,
           decoration: InputDecoration(
             hintText: "Enter $text",
             enabledBorder: OutlineInputBorder(
